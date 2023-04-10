@@ -1,0 +1,33 @@
+ {% extends 'base.html' %}
+ {% load static %}
+{% block title %}Create Post{% endblock title %}
+ {% block content %}
+    <form class="ui form" enctype="multipart/form-data" action="{% url 'posts:post-view' %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+  <button class="ui primary button" type="submit" name="mobile_form" style="margin-top: 20px !important;margin-bottom:20px !important;">Submit</button>
+</form>
+
+<script>
+   const selector =  [...document.getElementById('id_user')]
+    const username= "{{request.user}}"
+    for (const i in selector){
+      if (username == selector[i].innerText)
+      selector[i].selected=true
+      $('#id_user').hide()
+      $('label[for="id_user"]').hide()
+     
+    }
+
+    const user_profile = "{{request.user.profile}}";
+    const user_profile_selector =  [...document.getElementById('id_profile')]
+    for (const i in user_profile_selector){
+      if (user_profile == user_profile_selector[i].innerText)
+      user_profile_selector[i].selected=true
+      $('#id_profile').hide()
+      $('label[for="id_profile"]').hide()
+     
+    }
+</script>
+
+ {% endblock content%}

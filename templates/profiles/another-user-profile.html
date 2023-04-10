@@ -1,0 +1,36 @@
+ {% extends 'base.html' %}
+ {% load static %}
+{% block title %}View Profile{% endblock title %}
+ {% block content %}
+
+ <div class="ui container segment padded">
+     <div class="ui divided items">
+         <div class="item">
+             <div class="image">
+                 <img src="{{profile.get_avatar_url}}">
+             </div>
+             <div class="content">
+
+
+                 <div class="meta">
+                     <div class="ui huge header">{{profile.first_name|title}} &nbsp; {{profile.last_name|title}}</div>
+                     <div class="ui huge header">Username : {{profile.user|title}} </div>
+                     <div class="ui header ">Country: {{profile.country}}</div>
+                     <div class="ui header ">Bio: <span style="font-weight: normal !important;">{{profile.bio}}</span></div>
+                     <div class="ui header ">Followers : <span style="font-weight: normal !important;">{{profile.count_followers}} &nbsp; people</span></div>
+                     <div class="ui header ">Following: <span style="font-weight: normal !important;">{{profile.count_following}} &nbsp; people</span></div>
+                     <div class="ui header ">No of Posts: <span
+                             style="font-weight: normal !important;">{{profile.count_all_posts}}</span></div>
+                     <div class="ui header ">No of Likes: <span
+                             style="font-weight: normal !important;">{{profile.count_all_likes}}</span></div>
+                     <div class="ui header ">No of Comments Made: <span
+                             style="font-weight: normal !important;">{{profile.comment_count}}</span></div>
+                     <div class="ui header ">No of Likes from all Posts: <span
+                             style="font-weight: normal !important;">{{profile.total_posts_likes_count}}</span></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ </div>
+ {% endblock content%}

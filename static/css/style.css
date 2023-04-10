@@ -1,0 +1,22 @@
+*{
+  font-family: 'Poppins' !important;
+  
+}
+body{
+  background-color: #FAF9F6 !important;
+}
+.profile-image img{
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+}
+.particulars{
+  display: flex !important;
+  flex-direction: row;
+}
+.user-actions a{
+  font-size: 13px !important;
+}
+.user-post-text{
+  font-size: 14px !important;
+}

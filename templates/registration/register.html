@@ -1,0 +1,12 @@
+ {% extends 'base.html' %}
+ {% load static %}
+
+ {% block content %}
+{% block title %}Register{% endblock title %}
+ <h1 class="ui header center" style="display: flex !important;">Register </h1>
+  <form method="POST" class="ui form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="ui blue button">Register</button>
+  </form>
+ {% endblock content%}

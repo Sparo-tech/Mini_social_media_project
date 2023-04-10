@@ -1,0 +1,44 @@
+ {% extends 'base.html' %}
+ {% load static %}
+
+ {% block content %}
+ {% block title %}User Profile{% endblock title %}
+{% if request.user == profile.user %}
+ <div class="ui container segment padded">
+     <div class="ui divided items">
+         <div class="item">
+             <div class="image">
+                 <img src="{{profile.avatar.url}}">
+             </div>
+             <div class="content">
+                 <div class="ui huge header">{{profile.first_name|title}} &nbsp; {{profile.last_name|title}} Profile</div>
+                 <br><br>
+                 <div class="meta">
+                     <div class="ui header ">User: {{profile.user}}</div>
+                     <div class="ui header ">Country: {{profile.country}}</div>
+                     <div class="ui header ">Bio: <span style="font-weight: normal !important;">{{profile.bio}}</span></div>
+                     <div class="ui header ">Followers : <span style="font-weight: normal !important;">{{profile.count_followers}} people</span></div>
+                     <div class="ui header ">Following: <span style="font-weight: normal !important;">{{profile.count_following}} people</span></div>
+                     <div class="ui header ">No of Posts: <span
+                             style="font-weight: normal !important;">{{profile.count_all_posts}}</span></div>
+                     <div class="ui header ">No of Likes: <span
+                             style="font-weight: normal !important;">{{profile.count_all_likes}}</span></div>
+                     <div class="ui header ">No of Comments Made: <span
+                             style="font-weight: normal !important;">{{profile.comment_count}}</span></div>
+                     <div class="ui header ">No of Likes from all Posts: <span
+                             style="font-weight: normal !important;">{{profile.total_posts_likes_count}}</span></div>
+                 </div>
+                 <div class="extra">
+                     <form action="{% url 'profiles:edit-profile' %}" method="GET">
+                         <button class="ui green button">Edit Profile</button>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ </div>
+{% else %}
+<h3>Soory you cannot view this profile</h3>
+ {% endif %}
+ {% endblock content%}

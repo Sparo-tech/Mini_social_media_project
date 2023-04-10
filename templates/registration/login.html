@@ -1,0 +1,15 @@
+ {% extends 'base.html' %}
+ {% load static %}
+{% block title %}Login{% endblock title %}
+ {% block content %}
+
+ {% if not request.user.is_authenticated %}
+ <h1 class="ui header center" style="display: flex !important;">Login</h1>
+ <form method="POST" class="ui form">
+   {% csrf_token %}
+   <input name="username" type="text" class="form-control">
+   <input name="password" type="password">
+   <button type="submit" class="ui blue button">Login</button>
+ </form>
+ {% endif %}
+ {% endblock content%}

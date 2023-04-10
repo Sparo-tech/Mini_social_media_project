@@ -1,0 +1,47 @@
+ {% extends 'base.html' %}
+ {% load static %}
+
+ {% block content %}
+ {% block title %}All Profiles{% endblock title %}
+{% if all_profiles %}
+ {% for profile in all_profiles %}
+ 
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="row">
+            <div class="four wide column">
+              <img class="ui small circular image" src="{{profile.get_avatar_url}}"> 
+            </div>
+            <div class="twelve wide column">
+              <h3>{{profile.user}}</h3>
+              <p>{{profile.bio|truncatechars:20}} </p>
+              <p><span>Followers: {{profile.count_followers}}</span>
+                <span>Following: {{profile.count_following}}</span></p>
+                <div class="ui buttons">
+                    <a href="{% url 'profiles:view-another-profile' profile.slug %}" ><button  class="ui primary button mb-5 w-big">View Profile</button></a>
+                    <br>
+                    <form action="{% url 'profiles:follow-another-profile' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="profile_pk" value="{{profile.pk}}" hidden>    
+                        {% if request.user in profile.all_followers %}       
+                        <button type="submit" class="ui red  button mb-5 w-big" style="margin-left: 20px !important;">UnFollow</button>
+                        {% else %}       
+                        <button type="submit" class="ui positive basic button mb-5 w-big" style="margin-left: 20px !important;">Follow</button>
+                        {% endif %}
+                      </form>  
+                        
+                  </div>
+              
+            
+                                
+            </div>
+          </div>
+        </div>
+      </div>
+    
+ {% endfor %}
+ {% else %}
+  <a class="header">Sorry there is no profile to yet</a>
+ {% endif %}
+ </div>
+ {% endblock content%}

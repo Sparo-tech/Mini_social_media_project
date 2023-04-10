@@ -1,0 +1,31 @@
+ {% extends 'base.html' %}
+ {% load static %}
+{% block title %}Edit Profile{% endblock title %}
+ {% block content %}
+  {% if request.user == profile.user %}
+
+    <form class="ui form" enctype="multipart/form-data" action="{% url 'profiles:edit-profile' %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+  <button class="ui primary button" type="submit" style="margin-top: 20px !important;margin-bottom:20px !important;">Submit</button>
+</form>
+<!--
+{% block scripts %}
+<script>
+    const selector =  [...document.getElementById('id_user')]
+    const username= "{{request.user}}"
+    for (const i in selector){
+      if (username == selector[i].innerText)
+      selector[i].selected=true
+      $('#id_user').hide()
+      $('label[for="id_user"]').hide()
+     
+    }
+</script>
+{% endblock scripts %}
+-->
+{% else %}
+<h3>Sorry you cannot edit this profile</h3>
+{% endif %}
+
+ {% endblock content%}

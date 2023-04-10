@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+
+
+    <style>
+        .post-img{
+            
+            max-height:300px;
+            max-width:300px;
+        }
+    </style>
+    <div class="ui container">
+        <div class="ui grid">
+            <div class="eight wide column">
+                {% if object_list %}
+
+                    {% for post in object_list %}
+                <div class="ui fluid card">
+                    <div class="content">
+                        <div class="right floated meta">
+                            <div class="ui grid">
+                                {% if post.user == request.user %}
+                                <div class="row">
+                                    <form action="{% url 'posts:edit-post' post.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        <button class="ui button bwhite-lg " type="submit">Update</button>
+                                    </form>
+                                   <form action="{% url 'posts:delete-post' %}" method="Post">
+                                   {% csrf_token %}
+                                       <input type="text" name="post_id" value="{{post.pk}}" hidden>
+                                        <button class="ui button bwhite-lg" type="submit"  >Delete</button>
+                                   </form>
+    
+                                </div>
+                                {% endif %}
+                            </div>
+    
+                        </div>
+                        <img class="ui avatar image " src="{{post.profile.get_avatar_url}}">
+                        {{post.user}}- Posted {{post.created|timesince}} ago  
+                    </div>
+                    <div class="ui fluid image">
+                        <img class="ui medium rounded image" src="{{post.get_image_url}}" >
+                    </div>
+                    <div class="content">
+                        <p>{{post.text}} {{p.all_following}} </p>
+                    </div>
+    
+                    <div class="extra content ui grid two columns">
+                       <form action="{% url 'posts:like-view' %}" method="POST">
+                           {% csrf_token %}
+                        <input type="hidden" name="post_id" value={{post.pk}}>
+                        <button class="ui blue button ">{{post.count_likes}} Likes &nbsp;<i class="thumbs up icon"></i></button>
+                       </form>
+                        <button class="cmt_btn ui button mb-5">{{post.count_comment}} comment(s)</button>
+                        <div class="ui container comment-box" style="display: none;">
+                            {% if post.all_comments %}
+                            {% for comment in post.all_comments %}
+                            <div class="ui container mb-5">
+                                <img class="ui avatar image" src="{{comment.post.profile.avatar.url}}">
+                                <span>{{comment.author}}-{{comment.comment_post_date|timesince}}</span>
+                                <div class='mt-5'>{{comment.comment}}</div>   
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            
+                            <hr>
+                            <form action="{% url 'Comment:post-comment' %}" method="POST"class='ui fluid form'>
+                                {% csrf_token %}
+                                <input type="hidden" name="post_pk" value={{post.id}}>
+                                <input type="text" name="comment" id="">
+                                <button type="submit" name="submit_c_form" class="ui primary button mt-5 w-full">Send</button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+                
+                {% else %}
+                    <h3>You have no post.Create one now</h3>
+                {% endif %}
+            </div>
+            
+            <div class="five wide column">
+                <div class="ui segment">
+                    
+                    <form action= "{% url 'posts:post-view' %}" method="POST" class='ui form' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form}} 
+                        <button type='submit' name="" class="ui positive button w-full mt-5">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+       
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        let display = false
+        $(".cmt_btn").click(function () {
+            if (display === false) {
+                $(this).next(".comment-box").show("slow");
+                display = true
+            } else {
+                $(this).next(".comment-box").hide("slow");
+                display = false
+            }
+        });
+    });
+  
+
+    const selector =  [...document.getElementById('id_user')]
+    const username= "{{request.user}}"
+    for (const i in selector){
+      if (username == selector[i].innerText)
+      selector[i].selected=true
+      $('#id_user').hide()
+      $('label[for="id_user"]').hide()
+     
+    }
+
+    const user_profile = "{{request.user.profile}}";
+    const user_profile_selector =  [...document.getElementById('id_profile')]
+    for (const i in user_profile_selector){
+      if (user_profile == user_profile_selector[i].innerText)
+      user_profile_selector[i].selected=true
+      $('#id_profile').hide()
+      $('label[for="id_profile"]').hide()
+     
+    }
+</script>
+
+{% block scripts %}
+<script src="{% static 'js/jquery.min.js'%}"></script>
+{% endblock scripts %}
+
+{% endblock content %}

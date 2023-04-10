@@ -1,0 +1,43 @@
+{% load static %}
+{% block mycss %}
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+
+{% endblock mycss %}
+    <nav style="margin-bottom: 20px !important" >
+        <header class="ui container " style="height:100% !important;">
+        
+            <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+              <ul class="nav-links">
+                <li><a href="{% url 'posts:home' %}">Home</a></li>
+                <li><a href="{% url 'posts:post-view' %}">Post </a></li>
+                <li><a href="{% url 'profiles:all-profiles' %}">All Users</a></li>
+                <li class="" style="display: flex !important; align-items:center; ">
+                    <div><img class="ui mini circular image" src="{{picture}}"></div>
+                    <div style="margin-left:10px !important;">
+                        <form action="{% url 'profiles:profile-view' %}" method="GET">
+                            <button class="ui primary button" type="submit">Profile</button>
+                        </form>
+                        
+                    </div>
+                </li>
+                 {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'users:register' %}">Register</a></li>
+                <li><a href="{% url 'users:login' %}">Login</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                <li><a href="{% url 'users:password-reset' %}"> Change Password</a></li>
+                {% endif %}
+                
+                
+              </ul>
+        </header>
+    </nav>
+
+{% block scripts %}
+  <script src="{% static 'js/app.js' %}"></script>
+{% endblock scripts %}

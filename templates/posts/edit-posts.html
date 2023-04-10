@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Posts{% endblock title %}
+{% block content %}
+
+
+{% if request.user.is_authenticated %}
+
+
+<section class="container">
+    {% if post.user == request.user %}
+    <form action="" method="POST" enctype="multipart/form-data" class="ui form" >
+        {% csrf_token %}
+        <div class="container the-form">
+            <h1 class="text-center mb-3 mt-5">Edit Post</h1>
+            {{form}}
+           <div class="text-center">
+            <button class="ui blue button">Update Changes</button>
+           </div>
+        </div>
+        {% else %}
+        <a class="ui header">Hey this is not your post stop trying nonsense</a>
+      {% endif %}
+        
+    </form>
+</section>
+  
+{% endif %}
+{% endblock content %}
